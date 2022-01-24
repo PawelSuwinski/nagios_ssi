@@ -1,0 +1,61 @@
+<style type="text/css">
+  table tr.detail::after {
+    margin-right: 20px;
+    padding-left: 10px;
+  }
+  table tr.detail::after {
+    content: '[_]';
+  }
+  table tr.detail.selected::after {
+    content: '[x]';
+  }
+  .customVars tr:first-of-type td {
+    padding-top: 10px;
+    border-top:  1px solid lightgray;
+  }
+  .customVars td.dataVar::after { content: ':'; }
+  .customVars td.dataVar {
+    vertical-align: text-top;
+  }
+  .customVars ul {
+    list-style: none;
+    padding: 0;
+  }
+  .Contacts span.pager,
+  .Contacts a.groupmail {
+    padding-left: 17px;
+    display: inline-block;
+  }
+  .Contacts span.pager::before,
+  .Contacts a.groupmail span::before {
+    content: '';
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+    position: absolute;
+    margin-left: -17px;
+    margin-top: 1px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .Contacts span.pager::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' id='body_1' width='16' height='16'%3E%3Cg transform='matrix(0.3265306 0 0 0.3265306 0 0)'%3E%3Cg transform='matrix(0.3987632 0 0 0.4007623 0 0)'%3E%3C/g%3E%3Cpath transform='matrix(0.3987632 0 0 0.4007623 0 0)' d='M33.822 50.291C 37.959 57.733 42.72 64.895 48.896 71.424C 55.1 77.984 62.782 83.962 72.771 89.03L72.771 89.03L72.78101 89.035L72.783 89.03C 73.511 89.401 74.204 89.392 74.855 89.14799C 75.799 88.795 76.78201 88.01099 77.73801 87.062C 78.467 86.336 79.381 85.13799 80.369 83.839C 84.215 78.785 88.97 72.53799 95.68301 75.646C 95.825 75.711 95.95901 75.78699 96.08501 75.87199L96.08501 75.87199L118.458 88.72399C 118.538 88.76999 118.615 88.81899 118.688 88.87099C 121.654 90.907 122.865 94.04299 122.878 97.55399C 122.892 101.175 121.549 105.228 119.604 108.655C 117.039 113.172 113.217 116.157 108.843 118.18C 104.673 120.108 100.045 121.134 95.57601 121.788C 88.58701 122.813 81.99801 122.162 75.28801 120.096C 68.73801 118.079 62.11201 114.711 54.88801 110.236L54.88801 110.236L54.36201 109.91C 51.03601 107.85 47.45601 105.634 43.97301 103.006C 31.108 93.296 18.007 79.283 9.512 63.904C 2.361 50.958 -1.552 36.995 0.581 23.681C 1.75 16.375 4.901 9.743 10.333 5.35C 15.095 1.497 21.521 -0.5900002 29.781 0.1469998C 30.754 0.2309998 31.574 0.7859998 32.036 1.566L32.036 1.566L32.042 1.563L46.366 25.833C 48.476 28.551 48.71 31.248 47.569 33.929C 46.626 36.147 44.677 38.18 42.093 40.097C 41.307 40.747 40.385 41.422 39.434 42.118C 36.236 44.459 32.578 47.136 33.822 50.291zM44.67 75.422C 38.066 68.44 33.035 60.88 28.695 53.065C 28.619 52.942 28.551 52.812 28.493 52.675C 25.319 45.216 31.013 41.05 35.986 37.413C 36.831 36.795 37.649 36.196 38.387 35.584L38.387 35.584L38.389 35.587C 38.432 35.551 38.477 35.516 38.524 35.482C 40.367 34.128 41.695 32.835 42.202 31.645C 42.491 30.966 42.384 30.219 41.736 29.38C 41.625 29.251 41.523 29.109 41.433 28.957L41.433 28.957L27.795 5.852C 21.926 5.611 17.376 7.173 14.011 9.896C 9.771999 13.325 7.288 18.655 6.337 24.595C 4.432 36.489 8.052999 49.189 14.629 61.095C 22.707 75.718 35.204 89.072 47.493 98.345C 50.872 100.895 54.269 102.998 57.425 104.952L57.425 104.952L57.951 105.278C 64.769 109.501 70.96799 112.664 77.003 114.522C 82.879 116.331 88.637 116.902 94.73199 116.008C 98.741 115.421 102.845 114.523 106.4 112.879C 109.751 111.329 112.648 109.094 114.534 105.775C 116.03 103.138 117.064 100.122 117.055 97.55301C 117.049 95.92301 116.583 94.52401 115.45 93.70901L115.45 93.70901L93.2 80.93C 90.739 79.849 87.571 84.011 85.007 87.38C 83.903 88.832 82.882 90.172 81.851 91.197C 80.374 92.663 78.733 93.92 76.889 94.608C 74.753 95.40701 72.494 95.442 70.134 94.238L70.134 94.238L70.136 94.234C 59.522 88.849 51.323 82.457 44.67 75.422z' stroke='none' fill='%23000000' fill-rule='nonzero' /%3E%3C/g%3E%3C/svg%3E");
+  }
+  .Contacts a.groupmail span::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' id='body_1' width='13' height='13'%3E%3Cg transform='matrix(0.5416667 0 0 0.5416667 0 0)'%3E%3Cg transform='matrix(1 0 0 1 0 0)'%3E%3C/g%3E%3Cpath transform='matrix(1 0 0 1 0 0)' d='M0 3L0 21L24 21L24 3L0 3zM6.623 10.929L2 16.641L2 7.182999L6.623 10.929zM2.482 5L21.517 5L12 12.713L2.482 5zM8.176001 12.188L12 15.287L15.83 12.183L21.442 19L2.663 19L8.176001 12.188zM17.384 10.924L22 7.183L22 16.531L17.384 10.924z' stroke='none' fill='%23000000' fill-rule='nonzero' /%3E%3C/g%3E%3C/svg%3E");
+  }
+  .Contacts span.pager {
+    padding-left: 25px;
+  }
+  .Contacts a.groupmail[href^="mailto:?"] {
+    display: none;
+  }
+</style>
+<script src="/nagios/ssi/js/mithril.min.js"></script>.
+<script src="/nagios/ssi/js/stream.js"></script>
+<script
+  src="/nagios/ssi/js/extinfo-footer.js"
+  data-topvar="PRIORITY, NAME, DESCRIPTION, DEPARTMENT, DEPARTMENT_LIDER, GAS, GAS_DEPUTY"
+  data-admingroup="admins"
+></script>
+<script src="/nagios/ssi/js/bulkactions-footer.js"></script>

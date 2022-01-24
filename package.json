@@ -1,0 +1,29 @@
+{
+    "version": "1.3.0",
+    "name": "nagios_ssi",
+    "decription": "Nagios site extension by custom CGI headers and footers.",
+    "author": {
+        "name": "Paweł Suwiński",
+        "email": "psuw@wp.pl"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/PawelSuwinski/nagios_ssi"
+    },
+    "scripts": {
+        "postinstall": "sh -c 'f=node_modules/mithril;t=ssi/js/; cp $f/mithril.min.js $t; cp $f/stream/stream.js $t'",
+        "postupdate": "npm run postinstall",
+        "start": "tests/_bootstrap.sh",
+        "stop": "tests/_bootstrap.sh stop",
+        "pretest": "npm run start",
+        "test": "selenium-side-runner tests/*.side"
+    },
+    "devDependencies": {
+        "eslint": "^7.24.0",
+        "eslint-plugin-html": "^6.1.2",
+        "eslint-plugin-mithril": "^0.2.0",
+        "mithril": "^2.0.4",
+        "selenium-side-runner": "^3.17.0"
+    },
+    "dependencies": {}
+}

@@ -1,0 +1,2689 @@
+{
+  "id": "db3bdd23-ad4a-46f8-bbaf-f614a80db875",
+  "version": "2.0",
+  "name": "nagios_ssi",
+  "url": "http://nagiosadmin:adminpass@127.0.0.1",
+  "tests": [{
+    "id": "9b3be036-d2fc-4fdc-bcb6-9e3d91bae5f9",
+    "name": "customVarsOnServiceState",
+    "commands": [{
+      "id": "dc06217b-e674-4b95-aa99-44b76a3792a7",
+      "comment": "Testuje wyświetlanie zmiennych niestandardowych na stronie stanu serwisu.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "19f1f3cd-719b-454e-9f3c-5263ae087933",
+      "comment": "",
+      "command": "store",
+      "target": "type=2&host=localhost&service=Root+Partition",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "83de9152-64bb-4d9c-b283-82899ddf8f67",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[[\"Priority\", \"Urgent\"], [\"Desc\", \"Check Root Partition\"]]",
+      "targets": [],
+      "value": "vars"
+    }, {
+      "id": "98e8af2a-c2bf-4fe4-8399-9f5ec74dea55",
+      "comment": "",
+      "command": "run",
+      "target": "_checkVars",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "2739109a-f089-45a1-a2bc-b322061a1160",
+    "name": "_checkVars",
+    "commands": [{
+      "id": "3b79290b-c80b-466f-8232-88e694d1327e",
+      "comment": "Test czy nazwy i wartości zmiennych pojawiają się w określonej kolejności w tbody customVars z pominięciem pustych i jest ustawiona klasa.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bd3967d1-09af-4c4e-9d6c-f28b910f931a",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/extinfo.cgi?${query}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f71b03b-e0b1-4d69-bd69-3086e40305fa",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=[class^=stateInfoTable]",
+      "targets": [],
+      "value": "300000"
+    }, {
+      "id": "0925202a-5062-4c42-bc14-9a6ee1434c90",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 1",
+      "targets": [],
+      "value": "idx"
+    }, {
+      "id": "6b0a1029-d7f2-42ea-8621-9b16b3a13eff",
+      "comment": "",
+      "command": "forEach",
+      "target": "vars",
+      "targets": [],
+      "value": "var"
+    }, {
+      "id": "c4a556c6-fb7b-4474-895f-e45ee2df5839",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return \"${var[0]}\".replaceAll(' ', '')",
+      "targets": [],
+      "value": "class"
+    }, {
+      "id": "fb2bbdf0-8f1e-43f9-a3f7-017871b8bab4",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//tbody[contains(@class, 'customVars')]//tr[contains(@class, ${class})]/td[contains(@class, 'dataVar')]/span[text()='${var[0]}']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d82d12d-735b-4a23-8242-457eb55104aa",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//tbody[contains(@class, 'customVars')]//tr[${idx}]/td[contains(@class, 'dataVar')]/span[text()='${var[0]}']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4ece421e-c1e7-4adc-a9b7-daec4677c399",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//tbody[contains(@class, 'customVars')]//tr/td[contains(@class, 'dataVar')]/span[text()='${var[0]}']/following::td[contains(@class, 'dataVal')][1][text()='${var[1]}']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a3aa6cbc-5c51-474a-857f-8c0de08f49ea",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${idx} + 1",
+      "targets": [],
+      "value": "idx"
+    }, {
+      "id": "d11ae9ab-5ea0-4399-99f2-80dbb8c061de",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b13f7eae-3341-4c80-b6e6-09feecf666b3",
+      "comment": "",
+      "command": "run",
+      "target": "_checkContacts",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "3fed4389-a563-450e-afbf-91a15441c3a7",
+    "name": "customVarsOnHostState",
+    "commands": [{
+      "id": "8d23560a-7614-4991-bca9-9deb244170ad",
+      "comment": "Testuje wyświetlanie zmiennych niestandardowych na stronie stanu hosta.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d9e5f826-fb19-475e-8822-02d9eba64e60",
+      "comment": "",
+      "command": "store",
+      "target": "type=1&host=localhost",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "e4739003-6862-41ba-bf7f-296970cd2db6",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[[\"Priority\", \"P0\"], [\"GAS\", \"root@nagios\"], [\"Nazwa Departamentu\", \"ISS\"], [\"GAS Second\", \"webmaster@nagios\"], [\"NR Pokoju\", \"27\"], [\"Check Command\", \"check-host-alive\"] ]",
+      "targets": [],
+      "value": "vars"
+    }, {
+      "id": "2bdf5161-7a9d-4dc8-9041-80701cb75252",
+      "comment": "",
+      "command": "run",
+      "target": "_checkVars",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "48e369ef-cf39-41e5-94b2-2ddbc907da97",
+    "name": "_checkContacts",
+    "commands": [{
+      "id": "32448af0-b953-4102-8f6d-a97e39b984b9",
+      "comment": "Testuje wyświetlanie kontaktów w zależności czy atrybut alias, pager i email jest ustawiony.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8d15d476-a352-4069-bc05-b06e9efb3af2",
+      "comment": "Wszystkie ustawione.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4218ebe-51d4-445c-b16b-255e0fc57531",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//li/a[contains(@href, 'mailto:nagios@localhost')][text()='Nagios Admin']",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b189582-4df5-449f-8da9-98d255040348",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//li/a[contains(@href, 'mailto:nagios@localhost')][text()='Nagios Admin']/following-sibling::span[contains(@class, 'pager')][text()='600000001']",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6f44bbec-0341-447b-9b18-51ddb3acc204",
+      "comment": "Brak: alias, pager.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "abb1385d-edaa-4428-8bca-c85b114c4d1e",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//li/a[contains(@href, 'mailto:server@localhost')][text()='serveradmin']",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "df601875-a71f-4ada-8cb9-0163b56e6a96",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//li/a[contains(@href, 'mailto:server@localhost')][text()='serveradmin']/following-sibling::span",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "daaf63b4-6793-47ee-97f2-a17071697a49",
+      "comment": "Brak: email, ustawiony parametr PAGER_HIDE.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "276a795d-a7b8-44a9-912a-828c7fdfe0a4",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//li[text()='Webmaster']",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "aed2d7d2-049f-48e2-8ed4-5806789682a1",
+      "comment": "manager: kontakt ukryty, ustawiona zmienna CONTACT_HIDE",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a196e842-acd4-45ce-b125-87aa14873fbf",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//li/a[text()='manager']",
+      "targets": [
+        ["linkText=Nagios Admin", "linkText"],
+        ["css=li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Nagios Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'mailto:nagios@localhost')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nagios Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8b7758a1-f6b6-40fb-af6b-01ba13f3812b",
+    "name": "customVarsTbodyAbsent",
+    "commands": [{
+      "id": "3dd01492-904b-460f-97cb-9edf4bdd90e0",
+      "comment": "Testuje wyświetlanie zmiennych niestandardowych na stronie stanu serwisu.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "006b2de9-064c-4637-9c20-f2221eacb4c7",
+      "comment": "",
+      "command": "store",
+      "target": "type=2&host=localhost&service=Root+Partition",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "e6d757f7-fa4e-4782-a078-d6539b1d56b9",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[[\"Priority\", \"Urgent\"], [\"Desc\", \"Check Root Partition\"]]",
+      "targets": [],
+      "value": "vars"
+    }, {
+      "id": "fbce03dd-39af-4de5-b8ef-9336fc4a97ee",
+      "comment": "",
+      "command": "run",
+      "target": "_checkVars",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "898ba58f-7342-4aee-9e11-7d581dff622f",
+    "name": "statusCommandsOnHostsAndServices",
+    "commands": [{
+      "id": "1b8489a1-7843-4a0b-a06c-4fdc5bdef3d1",
+      "comment": "Strony serwisów i hostów zawierające panel komend.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bcb11222-04cf-489e-a974-b678fa35cfe4",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[\"\", \"host=localhost\", \"style=detail\", \"style=hostdetail\", \"style=summary\", \"style=grid\", \"style=overview\"]",
+      "targets": [],
+      "value": "pages"
+    }, {
+      "id": "4ccb71ee-39c4-4481-8687-7d0b12e1754c",
+      "comment": "",
+      "command": "store",
+      "target": "Service Commands",
+      "targets": [],
+      "value": "commandsType"
+    }, {
+      "id": "e178aa58-a76f-4cea-b2b2-5e878aae4d50",
+      "comment": "",
+      "command": "forEach",
+      "target": "pages",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "551f8242-4a8c-4097-995e-1c447382036e",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckboxesAndCommands",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b65d73f9-c2de-493d-af17-bda5de787929",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "300ae24d-362e-4ef6-aa53-a8bcef80f553",
+      "comment": "",
+      "command": "store",
+      "target": "Host Commands",
+      "targets": [],
+      "value": "commandsType"
+    }, {
+      "id": "7f2b61db-315a-427f-9764-b73b53ee2577",
+      "comment": "",
+      "command": "store",
+      "target": "hostgroup=all&style=hostdetail",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "4d946ba1-3802-45da-b754-da5cb5b7476e",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckboxesAndCommands",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "06926f56-27e5-4333-bc71-3848063347d9",
+    "name": "_statusCheckSelected",
+    "commands": [{
+      "id": "b0232efb-f1a6-4bd3-8a88-c2230ba3ab0b",
+      "comment": "Czy wskazana ilość elementów jest zaznaczona. @param: expectedSelected.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "33ba7e2d-7174-4e92-ab71-0bda16e4bf90",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//table[contains(@class, 'status')]//*[contains(@class, 'selected')]",
+      "targets": [],
+      "value": "foundSelected"
+    }, {
+      "id": "399244c0-4f16-4e86-8567-547ab08de35b",
+      "comment": "",
+      "command": "assert",
+      "target": "foundSelected",
+      "targets": [],
+      "value": "${expectedSelected}"
+    }]
+  }, {
+    "id": "55d56680-723e-49df-abd9-51542f77c3f7",
+    "name": "_statusCheckboxesAndCommands",
+    "commands": [{
+      "id": "0be698b7-63be-4ed6-88a1-3c424c794aa7",
+      "comment": "Obecność checkbox i panelu komend na stronie. @param: query, commandType.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f19560e2-1618-4214-9d35-671500e67b23",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi?${query}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5afce0e8-6154-415a-b72b-bb5a16998eaa",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.itemTotalsTitle",
+      "targets": [],
+      "value": "3000"
+    }, {
+      "id": "a63a420d-343d-4d9b-a3b8-ca9038c4be37",
+      "comment": "",
+      "command": "storeText",
+      "target": "css=.itemTotalsTitle",
+      "targets": [
+        ["css=.itemTotalsTitle", "css:finder"],
+        ["xpath=//body/div[2]", "xpath:position"],
+        ["xpath=//div[contains(.,'Results 1 - 12 of 12 Matching Services')]", "xpath:innerText"]
+      ],
+      "value": "matches"
+    }, {
+      "id": "2adab771-cb42-4888-94f6-544ae37a7b80",
+      "comment": "Ilość znalezionych rekordów plus nagłówek.",
+      "command": "executeScript",
+      "target": "return parseInt(${matches}.match(/of ([0-9]+)/)[1])+1",
+      "targets": [],
+      "value": "matches"
+    }, {
+      "id": "a1ef248c-809f-4304-8bd4-763ee305a303",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=table.status tr.detail td",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a01660f0-4685-450b-853c-b09dbd35a52d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=table.status tr.detail th",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64c20c6e-f56f-480f-b69b-71533ce1a1e6",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//table[contains(@class, 'status')]//tr[contains(@class, 'detail')]",
+      "targets": [],
+      "value": "foundCheckbox"
+    }, {
+      "id": "032e86f3-382c-43f7-9097-779f07ed3c45",
+      "comment": "",
+      "command": "assert",
+      "target": "foundCheckbox",
+      "targets": [],
+      "value": "${matches}"
+    }, {
+      "id": "e3ec57f2-8359-4880-a02b-c4067cf9425e",
+      "comment": "Kliknięcie w komórkę nagłówka nie powoduje zaznaczenia.",
+      "command": "executeScript",
+      "target": "document.querySelector('tr.detail > th:last-of-type').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b94f8eae-6daf-4926-b204-6b42537ab9be",
+      "comment": "Kliknięcie w komórkę wiersza nie powoduje zaznaczenia wiersza.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail > td').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc342acd-0ac5-4293-95d2-d65fb6bfbd4c",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 0",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "75656a10-8858-4f38-bb5a-dca076d171bb",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "71151a3f-4fe2-4dcf-8e49-abbaffd7fd10",
+      "comment": "Brak panelu komend przed zaznaczeniem.",
+      "command": "assertElementNotPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f5093df8-55b8-477b-9a38-c1f5be520b5b",
+      "comment": "Zaznacz szybko 2 i 3 wiersz. Generuje tylko jedno zapytanie o panel komend. W przypadku hostów (2 pozycje) zaznacza dodatkowo wiersz nagłówkowy.",
+      "command": "executeScript",
+      "target": "[2, 3].forEach(rowId => document.querySelector('.detail:nth-child(' + rowId + ')').click())",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "389c060d-bf3d-486f-9413-8d1b24f20e4b",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${commandsType}.indexOf('Service') !== -1 ? 2 : 3",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "0f223133-7507-4c38-b20f-9ccea79171ba",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5c451543-632b-4835-ab17-45949c4c4191",
+      "comment": "Odznacz pierwszy wiersz, tym samym także nagłówkowy dla hostów.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "007e019b-ee73-46a1-b47b-d16f62f4e6ca",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 1",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "1b9c65d8-278a-4eee-8fd4-a1dc741d12f8",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "603d5fdb-f60d-413a-8e38-5c4f3f324989",
+      "comment": "Zaznacz wszystkie.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(1)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c3979a12-ed6e-4ad4-a13b-9147801fc3d4",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${matches}",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "bccb4cc3-3e56-4d99-b75c-b007719f846c",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a2a8dddc-5b8e-44c6-9a5f-cc132934f2bf",
+      "comment": "Odznacz pierwszy wiersz, tym samym także nagłówkowy.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66fd14f7-552e-4f43-b677-ced4c59bf6ee",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${matches} - 2 ",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "d907ab44-a775-467e-ada5-bad66c0edad4",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fa874088-5ded-4fa7-a368-d1eda90485ce",
+      "comment": "Zaznacz ponownie pierwszy wiersz, tym samy także nagłówkowy.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf5dd1b7-3738-4003-8d75-a9bee78368ff",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${matches}",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "981b845c-a85d-44f3-b0d9-0cddc2e4e9d5",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "786d4177-c4b1-4397-8ebe-b3ac9f80b1b4",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "0131c6bf-e6b2-47ac-b006-9dd7305a2681",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//div[contains(@class, 'commandPanel')]",
+      "targets": [],
+      "value": "foundPanels"
+    }, {
+      "id": "76be8421-6f45-43aa-a69f-967aaf6979da",
+      "comment": "Tylko jeden panel komend obecny.",
+      "command": "assert",
+      "target": "foundPanels",
+      "targets": [],
+      "value": "1"
+    }, {
+      "id": "d3252d4d-a8a9-4acf-9f58-7b6068546c5a",
+      "comment": "Lista komend jest schowana.",
+      "command": "assertElementNotPresent",
+      "target": "css=.commandPanel.show",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e68f8dbd-f0f8-45ff-bbee-6bf1c53f667e",
+      "comment": "Rozwiń listę komend.",
+      "command": "click",
+      "target": "css=.commandPanel div[class$=\"Title\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f6cc8133-829a-44d7-afab-d4ba0bb5890b",
+      "comment": "Widoczne są tylko linki do cmd.cgi, host i service wycięte.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0fa096a1-afcf-4a56-8767-b03310a357ca",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.commandPanel div[class$=\"Title\"]",
+      "targets": [
+        ["css=.dataTitle", "css:finder"],
+        ["xpath=//div[5]/div", "xpath:position"]
+      ],
+      "value": "${commandsType}"
+    }, {
+      "id": "bc07d295-aee2-42ad-8bd0-4bedf045dd21",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.command a[href*=\"cmd.cgi?cmd_typ=\"]",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "19c24395-d001-487f-ac93-f2c2b745d477",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=tr.command:not([style*=\"display: none\"]) a:not(a[href*=\"cmd.cgi\"])",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "43ecb675-c2af-47d1-8f7a-0373d4cc99bb",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=tr.command:not([style*=\"display: none\"]) a[href*=\"&\"]",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "78558178-b080-48ec-ae4a-592d0789fe8c",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=tr.command:not([style*=\"display: none\"]) a[href*=\"service=\"]",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebb1528c-380b-4d24-a2c8-fefe26368f04",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=tr.command:not([style*=\"display: none\"]) a[href*=\"host=\"]",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "965d2894-da2e-4ef9-9272-ba2b45107bbd",
+      "comment": "Odznacz wszystkie.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(1)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87bb658b-734a-4fcb-93d6-e132c12ce9d4",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 0",
+      "targets": [],
+      "value": "expectedSelected"
+    }, {
+      "id": "15273dc4-eb9a-4abb-b7fd-657e5da2f3fa",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35541366-c364-496e-bcef-2ecb8c638f37",
+      "comment": "Brak panelu komend po odznaczeniu wszystkich.",
+      "command": "assertElementNotPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "2c74d2ea-1134-4012-8772-b5089adce9b4",
+    "name": "statusServicesCommandExec",
+    "commands": [{
+      "id": "46ecca34-fa4f-4969-8b98-37160bbdeb19",
+      "comment": "Wykonanie komendy dla wybranych serwisów i praca z formularzem komend.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fb2ee032-2eb8-4e8b-8faa-0b6f28d089e2",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4ddaecef-e62b-4615-985a-7a74a9697d43",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6bdb22a2-6ce7-4129-9867-a8cdb4e093b5",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(5)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d01aeff2-b2d6-49b8-a749-d9abe9d24b82",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(10)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e8b5b743-99c6-40f6-af18-a0eefcfac2da",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(12)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fecd2726-725e-4353-b662-daa7311e455c",
+      "comment": "",
+      "command": "store",
+      "target": "service",
+      "targets": [],
+      "value": "paramName"
+    }, {
+      "id": "c827165a-14c3-4511-9c5f-2f62af8b7c01",
+      "comment": "",
+      "command": "store",
+      "target": "PING,Uptime@linksys-srw224p;HTTP,Root Partition@localhost",
+      "targets": [],
+      "value": "paramValue"
+    }, {
+      "id": "1b1a5c74-b242-4fd8-bbda-c70460b017ad",
+      "comment": "",
+      "command": "run",
+      "target": "_statusExecCommand",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b475a321-0614-4e80-8755-95b9135b9733",
+      "comment": "",
+      "command": "assertNotEditable",
+      "target": "name=host",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f944212-aad2-45d9-80e7-a07a54ddd588",
+      "comment": "Ręczne dodanie nieistniejącej usługi zawierającej '@' w nazwie.",
+      "command": "type",
+      "target": "name=service",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "PING@2,${paramValue}"
+    }, {
+      "id": "9c7a28fd-a67f-4a02-bd06-7bd418924004",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4bd7fd2-80d1-49f9-95f6-fab6c6f9bca9",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[4, 1]",
+      "targets": [],
+      "value": "expectedResults"
+    }, {
+      "id": "aac31165-dac8-4380-b325-76ceb10e64b1",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckResult",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1ea9d85b-9b6d-425c-8f01-dd6bb87510ab",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'host')][text()='localhost']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f96d981e-6fae-4a30-a6fd-53220df69a6d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'service')][text()='Root Partition']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "da237fa2-7d0c-4bc2-acd5-dbe02e2b413a",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'error')]//span[contains(@class, 'host')][text()='linksys-srw224p']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4e0ff743-1ff0-4612-a461-3afdec7455c3",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'error')]//span[contains(@class, 'service')][text()='PING@2']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f3955467-0be9-47a9-bf5e-0473dd068475",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return document.location.pathname + document.location.search",
+      "targets": [],
+      "value": "goBackUrl"
+    }, {
+      "id": "5071068e-c54f-4f2e-afdb-d03d50e05aed",
+      "comment": "Powrót do poprzedniej strony z formularzem. Obejście związane z  StaleElementReferenceError w side-runner. ",
+      "command": "open",
+      "target": "${goBackUrl}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8a39ecf0-0f84-4918-8636-e091958659a5",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=input[type=\"reset\"]",
+      "targets": [],
+      "value": "3000"
+    }, {
+      "id": "f2ee1669-4f9e-4e48-92ff-0b225dda49df",
+      "comment": "Reset formularza usuwa ręcznie dodany błędy serwis.",
+      "command": "click",
+      "target": "css= input[type=\"reset\"]",
+      "targets": [
+        ["css=.optBoxItem > input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='Reset']", "xpath:attributes"],
+        ["xpath=//td[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab63b6b0-ba24-41c3-b982-a09981bbf9f3",
+      "comment": "Wpisanie serwisu bez podania hosta za pomocą przyrostka '@' wyłącza asynchroniczną obsługę formularza.",
+      "command": "type",
+      "target": "name=service",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "PING;SSH"
+    }, {
+      "id": "fb2b2ecf-dfe7-4f3f-a40b-334aedecfa32",
+      "comment": "",
+      "command": "assertEditable",
+      "target": "name=host",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "02b209b1-910b-4fa4-a45d-a338d65ca654",
+      "comment": "",
+      "command": "type",
+      "target": "name=host",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "localhost"
+    }, {
+      "id": "eaba5214-db6a-4fa8-9b14-6d96eae61057",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ce087d7-d9a7-4837-b643-974ae0a65b83",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.errorMessage",
+      "targets": [
+        ["css=.errorMessage", "css:finder"],
+        ["xpath=//body/div", "xpath:position"],
+        ["xpath=//div[contains(.,'Sorry, but you are not authorized to commit the specified command.')]", "xpath:innerText"]
+      ],
+      "value": "Sorry, but you are not authorized to commit the specified command."
+    }, {
+      "id": "58d6517c-2367-46ed-b0e2-d8bb35aaedeb",
+      "comment": "Powrót do poprzedniej strony z formularzem. Obejście związane z  StaleElementReferenceError w side-runner. ",
+      "command": "//open",
+      "target": "${goBackUrl}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a000d3b3-5ed9-4a81-8201-378339cb9d6b",
+      "comment": "Powrót do poprzedniej strony.",
+      "command": "runScript",
+      "target": "history.back()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8e7b1c55-6113-49c2-b49b-bfb14a8c9a82",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "name=btnSubmit",
+      "targets": [],
+      "value": "3000"
+    }, {
+      "id": "ce07a80a-1071-4b56-a8ea-d64ba09cb50c",
+      "comment": "",
+      "command": "assertEditable",
+      "target": "name=host",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d7a9709-8bc1-4805-bf34-144932e7c840",
+      "comment": "Wpisanie pojedynczego serwisu z podaniem hosta dezaktywuje pole host i włącza asynchroniczne przetwarzanie formularza.",
+      "command": "type",
+      "target": "name=service",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "PING@localhost"
+    }, {
+      "id": "76c983ba-89e7-47da-b2f9-01396a625452",
+      "comment": "",
+      "command": "assertNotEditable",
+      "target": "name=host",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7faf02d6-f2c6-4385-abb2-8ecb559cfb71",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0654c08f-0cdf-4da8-a717-3ecb92757726",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[1, 0]",
+      "targets": [],
+      "value": "expectedResults"
+    }, {
+      "id": "05dc753d-ff39-470f-8f0b-b77255767cac",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckResult",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2ddea775-f1e9-4b88-b404-5692efd2df7b",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'host')][text()='localhost']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b990eecf-4f8a-4cb1-965e-f4736103cc4d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'service')][text()='PING']",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "d532d22e-c8bd-4399-987f-849ca20173a2",
+    "name": "statusCommandsAbsent",
+    "commands": [{
+      "id": "36b89e72-00a7-45e6-a680-4d08924724b8",
+      "comment": "Strony nie wyświetlające panelu komend, strony bez rekordów.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d48e0127-b8ef-4d4a-85b0-3b17de6467a9",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[\"hostgroup=all\", \"hostgroup=all&style=grid\", \"hostgroup=all&style=overview\", \"hostgroup=all&style=summary\", \"hostgroup=all&style=hostdetail&hoststatustypes=8\", \"hostgroup=all&style=detail&hoststatustypes=8\"]",
+      "targets": [],
+      "value": "pages"
+    }, {
+      "id": "5bc0beae-1833-4f52-9271-cadb730e0207",
+      "comment": "",
+      "command": "forEach",
+      "target": "pages",
+      "targets": [],
+      "value": "query"
+    }, {
+      "id": "77949c46-416a-414a-8494-1558c0a10a72",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi?${query}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c9361542-d072-4aa3-a674-ca69318dfa86",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=table.status tr.detail",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6bf8bf0f-cf29-4462-b0e9-0d612ad8cb11",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "8fc6e470-5e57-4ffa-be2f-68a0e67598c6",
+    "name": "_statusExecCommand",
+    "commands": [{
+      "id": "14868a73-69c4-4cfb-a528-f1ab68626840",
+      "comment": "Kliknięcie ostatniej komendy w panelu i sprawdzenie przekazanych parametrów. @param: paramName, paramValue.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "807f232a-1663-41b9-80fb-c3b2b3588f5a",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "da399566-75a8-48dc-8791-9496131e4b44",
+      "comment": "Rozwiń listę komend.",
+      "command": "click",
+      "target": "css=.commandPanel div[class$=\"Title\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1e59bc9a-9978-4d15-a14e-8f83adea1ded",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr.command:not([style*=\"display: none\"]):last-child a",
+      "targets": [
+        ["linkText=Disable active checks of this service", "linkText"],
+        ["css=.command:nth-child(1) a", "css:finder"],
+        ["xpath=//a[contains(text(),'Disable active checks of this service')]", "xpath:link"],
+        ["xpath=//a[@href='http://nagiosadmin:adminpass@127.0.0.1/nagios/cgi-bin/cmd.cgi?cmd_typ=6']", "xpath:href"],
+        ["xpath=//td[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Disable active checks of this service')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "24418872-ac62-457b-b578-8f7c2f72c1aa",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return new URL(document.URL).searchParams.get(${paramName})",
+      "targets": [],
+      "value": "paramValueFound"
+    }, {
+      "id": "899abbaa-a030-4a3d-95a9-463f4b369616",
+      "comment": "",
+      "command": "assert",
+      "target": "paramValueFound",
+      "targets": [],
+      "value": "${paramValue}"
+    }]
+  }, {
+    "id": "de10f138-1245-4a63-aa49-618a2ab61d3d",
+    "name": "statusHostsCommandExec",
+    "commands": [{
+      "id": "538e1b41-5d9c-41ac-8f54-ba5f62159f7a",
+      "comment": "Wykonanie ostatniej komendy dla wybranych serwisów i praca z formularzem komend.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "54725c4d-b0d6-4854-9d73-7d66eac5f61f",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "162bb294-b355-4f37-b543-67d3fe393b68",
+      "comment": "Wybierz wszystkie.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(1)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6dc51d08-8923-4150-9a5e-d25c34b6d36f",
+      "comment": "",
+      "command": "store",
+      "target": "host",
+      "targets": [],
+      "value": "paramName"
+    }, {
+      "id": "672d4469-cb3d-4210-b3cd-94b014ada24f",
+      "comment": "",
+      "command": "store",
+      "target": "linksys-srw224p;localhost",
+      "targets": [],
+      "value": "paramValue"
+    }, {
+      "id": "f4ec48ca-fcb6-4a9f-98f3-f816fbc6ee8f",
+      "comment": "",
+      "command": "run",
+      "target": "_statusExecCommand",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8147a875-d0af-4f6c-bb9d-2a739f4da682",
+      "comment": "",
+      "command": "click",
+      "target": "name=host",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b05a934-0e37-4494-b96f-410d87eae954",
+      "comment": "Ręczne dodanie nieistniejącego hosta.",
+      "command": "type",
+      "target": "name=host",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "${paramValue};host2"
+    }, {
+      "id": "bbf6e5d7-6950-42e3-99fb-28a18cb711e1",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0b1e80e-8f32-4329-a80b-92fe1dde0676",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[2, 1]",
+      "targets": [],
+      "value": "expectedResults"
+    }, {
+      "id": "96b0a417-1ff3-434e-bc73-dccb46cb6aeb",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckResult",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "810a58e0-0f9e-4d62-a203-2a29538d19c3",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'host')][text()='localhost']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1598eb92-b13d-421e-b6a9-5aa2366d0f58",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]//span[contains(@class, 'host')][text()='linksys-srw224p']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a541897e-2c8d-413c-bb1c-388c385fbfad",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'error')]//span[contains(@class, 'host')][text()='host2']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a0eabf50-e53a-4388-8226-f25e27e8aca5",
+      "comment": "Kliknięcie pozycji z błędem. Pozycja z błędem jest klikalna dla diagnostyki i ponowienia komendy.",
+      "command": "click",
+      "target": "css=.error .host",
+      "targets": [
+        ["css=.error .host", "css:finder"],
+        ["xpath=//span", "xpath:position"],
+        ["xpath=//span[contains(.,'host2')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7174423-a05f-4cc1-b5f3-7cc2218497c4",
+      "comment": "Po kliknięciu jest standardowy formularz tylko dla klikniętego elementu.",
+      "command": "assertValue",
+      "target": "name=host",
+      "targets": [
+        ["name=host", "name"],
+        ["css=b > input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "host2"
+    }, {
+      "id": "f72f39c0-cfa7-4f79-b3c1-3daab8c55511",
+      "comment": "Powrót do poprzedniej strony.",
+      "command": "runScript",
+      "target": "history.back()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6cbe3e72-1883-4f2f-b6db-c8eb8b17226d",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=input[type=\"reset\"]",
+      "targets": [],
+      "value": "3000"
+    }, {
+      "id": "576227e7-cafe-4fb4-bcd1-20eb5f268c54",
+      "comment": "Reset formularza usuwa ręcznie dodany błędy host.",
+      "command": "click",
+      "target": "css= input[type=\"reset\"]",
+      "targets": [
+        ["css=.optBoxItem > input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='Reset']", "xpath:attributes"],
+        ["xpath=//td[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52e6f8da-5c16-4305-a709-e297c184f4f0",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "092613e7-3de7-4f4e-80db-dc916237238a",
+      "comment": "Wszystkie poprawne.",
+      "command": "storeJson",
+      "target": "[2, 0]",
+      "targets": [],
+      "value": "expectedResults"
+    }, {
+      "id": "76ffb082-4cf0-428d-985a-ba021aee8719",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCheckResult",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9239d15-3b7d-4dd4-a2d9-c616215cd261",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.done",
+      "targets": [
+        ["css=.done", "css:finder"],
+        ["xpath=//div[3]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Done')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d5963f30-b4bf-4782-ad20-58cee9ab391c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.done",
+      "targets": [
+        ["css=.done", "css:finder"],
+        ["xpath=//div[3]/a/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Done')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "40261e92-a9e8-4951-ad65-f51f8fadd5b3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.statusTitle",
+      "targets": [
+        ["css=.statusTitle", "css:finder"],
+        ["xpath=//table[2]/tbody/tr/td[2]/div", "xpath:position"],
+        ["xpath=//div[contains(.,'Host Status Details For All Host Groups')]", "xpath:innerText"]
+      ],
+      "value": "Host Status Details For All Host Groups"
+    }, {
+      "id": "40bb764e-09c7-4a6b-ac34-2c8d864b9202",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2efc33ec-0da6-4338-a7da-8d3fde8ea2d1",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(3)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "654c4759-6cc8-443d-83d5-d41b787246b4",
+      "comment": "",
+      "command": "store",
+      "target": "localhost",
+      "targets": [],
+      "value": "paramValue"
+    }, {
+      "id": "6e9d1109-384a-47cc-a4dd-3ff3c5f6173d",
+      "comment": "",
+      "command": "run",
+      "target": "_statusExecCommand",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff60f8ba-0d34-48ac-a612-98c2b72c4003",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0aa05fdc-0e24-476d-bfa6-0d10719bd738",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class, 'infoMessage')][contains(text(), 'Your command request was successfully submitted')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a174a52b-2661-4145-9ed8-996cd8f2cdaf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Done",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "990b4460-5dbb-42d4-aa72-ac763efb406e",
+    "name": "_statusCheckResult",
+    "commands": [{
+      "id": "091625a0-b964-4be3-a141-ec8989f7f3cf",
+      "comment": "Sprawdza ilość pozycji success i  error. @param: expectedResults",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c54b7c73-64aa-4f55-9f0e-757be2c79955",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'success')]/li",
+      "targets": [],
+      "value": "foundResult"
+    }, {
+      "id": "1c717362-4947-401d-a753-7f847390dae4",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${expectedResults}[0]",
+      "targets": [],
+      "value": "expectedResult"
+    }, {
+      "id": "42274fa3-39ba-408e-a805-8e3fa8537c2c",
+      "comment": "",
+      "command": "assert",
+      "target": "foundResult",
+      "targets": [],
+      "value": "${expectedResult}"
+    }, {
+      "id": "69590fdc-3100-4113-b797-3ed7286126e8",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//div[contains(@class, 'infoMessage')]/ul[contains(@class, 'error')]/li",
+      "targets": [],
+      "value": "foundResult"
+    }, {
+      "id": "c8f95730-f288-4e56-a463-37d75eaa8165",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${expectedResults}[1]",
+      "targets": [],
+      "value": "expectedResult"
+    }, {
+      "id": "c89bc4b0-c4ef-42d7-bc43-e792f9586bd1",
+      "comment": "",
+      "command": "assert",
+      "target": "foundResult",
+      "targets": [],
+      "value": "${expectedResult}"
+    }]
+  }, {
+    "id": "d27059f4-c9e1-4cad-8a5b-3205dd7d15f5",
+    "name": "statusCommandsReload",
+    "commands": [{
+      "id": "f72255e4-3197-469c-8a7e-ff503bb9e437",
+      "comment": "Ładowanie i usuwanie listy komend w zależności od zaznaczonego wiersza. Jeden z hostów ma wyłączone powiadomienia.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "806fe6ce-cabc-4287-a855-207d8356412c",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bc15e0e5-f67f-4332-b068-dda99ce68bb3",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=a[href$='linksys-srw224p'] [alt='Notifications for this host have been disabled']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c43bd295-3bd5-460e-85cb-e9fec22be19f",
+      "comment": "Zaznaczenie pierwszego hosta i pobranie jego listy komend.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1ef9880f-222b-48d6-811a-fb4c9e9f77ec",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "4ba960a8-f515-4755-83ee-a581ca6a0d88",
+      "comment": "Rozwiń listę komend.",
+      "command": "click",
+      "target": "css=.commandPanel div[class$=\"Title\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "681b96bc-d6b9-44a4-ae1d-ccfe44791004",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//td[contains(@class, 'command')]/a[text()='Disable notifications for this host']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "46b89ea3-e321-421b-8651-141379dff4f6",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//td[contains(@class, 'command')]/a[text()='Enable notifications for this host']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ba417be-04e6-483f-b4ac-8ce79580855b",
+      "comment": "Cofnięcie zaznaczenia i usunięcie panelu komend.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(2)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4544d97b-4be1-4c39-b692-c7d2a87f633e",
+      "comment": "Wybranie drugiego hosta i załadowanie jego listy komend.",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(3)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "20b4b087-f843-40d6-a9c1-273caec30444",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=.commandPanel",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "448131e3-fdfb-493b-879e-c1f70855641c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.commandTitle",
+      "targets": [
+        ["css=.commandTitle", "css:finder"],
+        ["xpath=//div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "06642f1f-c5ea-4d6f-9e26-f601f276d78b",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//td[contains(@class, 'command')]/a[text()='Disable notifications for this host']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "93f02fa0-71b4-4bd8-9ccc-d4ce5a138448",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//td[contains(@class, 'command')]/a[text()='Enable notifications for this host']",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "5b45034e-9cc7-471d-a412-88f8168b0c0b",
+    "name": "customVarsCheckCommandNoAdmin",
+    "commands": [{
+      "id": "236d2dd1-7bd5-4441-9972-2323b134c12d",
+      "comment": "Na stronie statusowej pole Check Command nie jest widoczne dla użytkowników nienależących do grupy admins.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a179a8fb-151e-4760-85fe-39f30a0c1b33",
+      "comment": "",
+      "command": "open",
+      "target": "http://manager:adminpass@127.0.0.1/nagios/cgi-bin/extinfo.cgi?type=1&host=localhost",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4841686-6215-4de5-ba06-9d19e011f173",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=tbody.customVars tr.Contacts",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "7746a123-1b5e-4fac-b675-8e2df807811c",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=tbody.customVars tr.CheckCommand",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "f69cb273-c7eb-426d-9ff7-5e41db0c02a4",
+    "name": "bulkRemove",
+    "commands": [{
+      "id": "301255bf-4303-4e71-8bfe-d4650174a0a9",
+      "comment": "Masowe usuwanie komentarzy i przestojów.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fedc46d6-0c5e-417c-b41f-507985febe87",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return Date.now();",
+      "targets": [],
+      "value": "timestamp"
+    }, {
+      "id": "cbd49de4-bbd3-4bef-a2a5-97f8e072d873",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[\"3\", \"6\"]",
+      "targets": [],
+      "value": "types"
+    }, {
+      "id": "4c289228-9c28-42f4-a1a0-87469265d538",
+      "comment": "Kolejność jest celowa tak by testować usuwanie od drugiej tabeli.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "34b052ad-c10f-4b94-b709-3f97032c85d8",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[\"service\", \"host\"]",
+      "targets": [],
+      "value": "objects"
+    }, {
+      "id": "e160b1a7-1e5e-4d06-ae25-800ccd418d57",
+      "comment": "",
+      "command": "forEach",
+      "target": "types",
+      "targets": [],
+      "value": "type"
+    }, {
+      "id": "e93eaa81-6b1d-4d87-bd5b-09d5db2dc0c7",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/extinfo.cgi?type=${type}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f44e8a62-3f3f-4ada-8a24-1a705498f9c4",
+      "comment": "",
+      "command": "forEach",
+      "target": "objects",
+      "targets": [],
+      "value": "object"
+    }, {
+      "id": "5fa1af8a-3486-4b22-952b-0aef5a6d48da",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveSetActionName",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1539ab75-3980-4523-8969-e2995a1e7e97",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveAdd",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e7e4d7ff-0d69-4ed9-8713-f8497424e04d",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0811356d-c17a-4693-960c-fee773308c13",
+      "comment": "",
+      "command": "forEach",
+      "target": "objects",
+      "targets": [],
+      "value": "object"
+    }, {
+      "id": "5a02731a-2fc3-4d16-8a3c-022e5f3540c4",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveSetActionName",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e4099519-bd21-4179-8a5f-f92bf5e2997c",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveDel",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "00edbbd2-dd78-4dfa-bed7-af1fc76f32bc",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3d086a37-e6ec-4e63-a5a3-7e7ffd5e4dea",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "333f1674-444b-403a-8b19-05e5a8ed6ca8",
+    "name": "_bulkRemoveAdd",
+    "commands": [{
+      "id": "8ad43da0-4d1d-4328-a3b7-4443f71bb8e9",
+      "comment": "Dodaje dane testowe do tabeli. @params: actionName, timestamp.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d27bc5e-5b09-42c9-bba3-241ef599e346",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 0",
+      "targets": [],
+      "value": "n"
+    }, {
+      "id": "51f97d13-cd0e-4726-9407-de88c120e152",
+      "comment": "",
+      "command": "times",
+      "target": "4",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bd23d855-4601-4ec1-826e-2265e2750aff",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${n} + 1",
+      "targets": [],
+      "value": "n"
+    }, {
+      "id": "c420a614-4b61-4d75-acb3-0204ca9558cd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=${actionName}",
+      "targets": [
+        ["linkText=Add a new host comment", "linkText"],
+        ["css=.comment:nth-child(8) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Add a new host comment')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'cmd.cgi?cmd_typ=1')]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Add a new host comment')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c017317a-c328-48ba-9148-7b4d61d52662",
+      "comment": "",
+      "command": "type",
+      "target": "name=host",
+      "targets": [
+        ["name=host", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "localhost"
+    }, {
+      "id": "15654dc7-d6d6-481b-b51a-b7a07faed0ab",
+      "comment": "",
+      "command": "if",
+      "target": "document.forms[0].service",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "331ec578-7b77-4fc8-9f8a-4556de167ba5",
+      "comment": "",
+      "command": "type",
+      "target": "name=service",
+      "targets": [
+        ["name=host", "name"],
+        ["css=tr:nth-child(2) input", "css:finder"],
+        ["xpath=//input[@name='host']", "xpath:attributes"],
+        ["xpath=//b/input", "xpath:position"]
+      ],
+      "value": "Root Partition"
+    }, {
+      "id": "018bbe03-429d-4d71-a794-e79d9fd4b367",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2332889-e688-4dd7-ab02-d254b01f8c6f",
+      "comment": "",
+      "command": "if",
+      "target": "document.forms[0].start_time && document.forms[0].end_time",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6fad5dd8-084d-4833-a166-d39a75492079",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return (d => d.toLocaleDateString().replaceAll('.', '-') + ' ' + d.toLocaleTimeString())(new Date(Date.now() + ${n} * 3600 * 1000))",
+      "targets": [],
+      "value": "startTime"
+    }, {
+      "id": "3a51dcb3-986d-4a94-9053-0fc6a2a80b4f",
+      "comment": "",
+      "command": "type",
+      "target": "name=start_time",
+      "targets": [],
+      "value": "${startTime}"
+    }, {
+      "id": "7ccc1004-4ed7-467b-a769-d1616a84d851",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return (d => d.toLocaleDateString().replaceAll('.', '-') + ' ' + d.toLocaleTimeString())(new Date(Date.now() + (${n} + 1) * 3600 * 1000))",
+      "targets": [],
+      "value": "endTime"
+    }, {
+      "id": "b6eaae2b-bec7-4224-ad7f-dd571924c611",
+      "comment": "",
+      "command": "type",
+      "target": "name=end_time",
+      "targets": [],
+      "value": "${endTime}"
+    }, {
+      "id": "fcfe00cb-67a4-4568-8fd0-3fba11060dfe",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "421f9f49-ec08-4206-ac30-a06e37eef841",
+      "comment": "",
+      "command": "type",
+      "target": "name=com_data",
+      "targets": [
+        ["name=com_data", "name"],
+        ["css=tr:nth-child(5) input", "css:finder"],
+        ["xpath=//input[@name='com_data']", "xpath:attributes"],
+        ["xpath=//tr[5]/td[2]/b/input", "xpath:position"]
+      ],
+      "value": "comment #${timestamp}.${n}"
+    }, {
+      "id": "3aca6188-db19-453f-81ab-fda58751308f",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [
+        ["name=btnSubmit", "name"],
+        ["css=.optBoxItem > input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='btnSubmit']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5453ffe-ae65-42ec-bb8b-1359fd6b09ad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Done",
+      "targets": [
+        ["linkText=Done", "linkText"],
+        ["css=a:nth-child(5)", "css:finder"],
+        ["xpath=//a[contains(text(),'Done')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'javascript:window.history.go(-2)')]", "xpath:href"],
+        ["xpath=//div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Done')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "78c67165-6978-4842-8867-b8e4f149ce62",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5cc54b02-bb50-4cee-a342-e721299921a2",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${n}",
+      "targets": [],
+      "value": "expectedAddedNb"
+    }, {
+      "id": "25b0ea8c-9fc6-4194-85a9-b1452a1293d4",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveWaitFor",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5bc3d104-7bbc-4139-9cda-c3c34a734fd7",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}.${n}\")]",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "d398698a-2e45-4683-bb37-5d375f936509",
+    "name": "_bulkRemoveDel",
+    "commands": [{
+      "id": "7d9ddabd-84d7-4e56-9f2d-eead9a686270",
+      "comment": "Usuwanie wielu elementów na raz.  @params: timestamp, actionName, n.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7993e729-79e0-4dd3-9e83-db20316d4334",
+      "comment": "Zaznacz pierwszy i ostatni.",
+      "command": "executeScript",
+      "target": "[1, ${n}].forEach(r => document.evaluate(('//a[text()=|' + ${actionName} + '|]/following::table[1]//tr[contains(., |#' + ${timestamp} + '.' + r + '|)]').replaceAll('|', String.fromCharCode(34)), document).iterateNext().click());",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18758771-4851-4928-9782-f11958814f43",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${n} - 2",
+      "targets": [],
+      "value": "expectedAddedNb"
+    }, {
+      "id": "69b6abf3-cb64-449b-b19b-30708ca00d5b",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveDeleteSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ea30904e-6168-4945-bff7-83f3640f06f4",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}.1\")]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8e3ce369-86de-4a24-95dc-91277e50c59c",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}.${n}\")]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "62f83e89-cc3e-49e8-832d-47fc8f15b41f",
+      "comment": "Zaznacz wszystkie.",
+      "command": "executeScript",
+      "target": "document.evaluate(('//a[text()=|' + ${actionName} + '|]/following::table[1]//tr[1]').replaceAll('|', String.fromCharCode(34)), document).iterateNext().click();",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e8d521b-afc4-4b5e-9a8e-3c70c8774992",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return 0",
+      "targets": [],
+      "value": "expectedAddedNb"
+    }, {
+      "id": "7ef2470e-8abe-4b7c-9f39-3feb24eb82a1",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveDeleteSelected",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ac1ffdae-f08c-4ed2-ab42-187f1aabad46",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}\")]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b54a3bfb-fb5e-43a8-ad1c-d819d90e544d",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::a[contains(text(), \"Delete\")][contains(text(), \"selected\")]",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "10064f70-0d05-4e21-a5ba-d6c8e250e05b",
+    "name": "_bulkRemoveDeleteSelected",
+    "commands": [{
+      "id": "4491fbd2-7726-49ab-af54-1dcf898501f1",
+      "comment": "Wykonuje 'Delete selected' i oczekuje na aktulizację. @params: actionName, expectedAddedNb.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9c96be61-2e49-4af2-93b2-df6ca2f48ba7",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::a[contains(text(), \"Delete\")][contains(text(), \"selected\")]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bd09b0a5-9dd1-4efd-aeea-829cfba72de3",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "92ca93ec-6a06-44dc-a0d1-2799d37e3697",
+      "comment": "",
+      "command": "click",
+      "target": "css=.done",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87defd0d-8da2-446c-8d29-317c8a786ebf",
+      "comment": "",
+      "command": "run",
+      "target": "_bulkRemoveWaitFor",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "0f385041-09c4-41be-bd25-bec924a15be7",
+    "name": "_bulkRemoveWaitFor",
+    "commands": [{
+      "id": "0e31228f-f3b3-4f46-bd85-09ef7bade6b8",
+      "comment": "Przeładowuje stronę w oczekiwaniu na pojawienie się określonej liczby elementów w tabeli. @param: expectedAddedNb, actionName, timestamp.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "651862fc-e4f8-4f0b-9bb2-9870ca848565",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}\")]",
+      "targets": [],
+      "value": "addedNb"
+    }, {
+      "id": "d082265c-a007-4b02-ad81-059be6a84c1f",
+      "comment": "",
+      "command": "while",
+      "target": "${addedNb} != ${expectedAddedNb}",
+      "targets": [],
+      "value": "30"
+    }, {
+      "id": "3a80aa20-bc7d-4bac-9f6a-fe59ace07610",
+      "comment": "",
+      "command": "executeAsyncScript",
+      "target": "return new Promise(resolve => setTimeout(() => resolve(true), 2000))",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2e73edb3-64b9-4fdb-aecf-d8fe3a8d8347",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return document.URL",
+      "targets": [],
+      "value": "URL"
+    }, {
+      "id": "f81a9754-33c2-4dd7-875e-b4885742745d",
+      "comment": "",
+      "command": "open",
+      "target": "${URL}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "717e269b-3e2d-46cd-a6e5-25207ae2992f",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//a[text()=\"${actionName}\"]/following::table[1]//td[contains(text(), \"#${timestamp}\")]",
+      "targets": [],
+      "value": "addedNb"
+    }, {
+      "id": "c36d2502-7bd4-4b13-81d1-f38a7f77b14e",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "cad336f0-461b-48a4-871e-e69c849efcc5",
+    "name": "_bulkRemoveSetActionName",
+    "commands": [{
+      "id": "e72407cd-7f15-4504-9298-0ca77697513a",
+      "comment": "Ustawia actionName. @param: object, type.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5f6be14f-19c2-4382-a479-cf1d7aa88d33",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return (${type} == 3 ? 'Add a new OBJ comment' : 'Schedule OBJ downtime').replace('OBJ', ${object});",
+      "targets": [],
+      "value": "actionName"
+    }]
+  }, {
+    "id": "c81480d8-5320-4a6d-8552-916de5e89c1f",
+    "name": "bulkRemoveCmd",
+    "commands": [{
+      "id": "f77e8386-506d-4ac2-a5f6-6b2bc0b82719",
+      "comment": "Przetwarzanie więcej niż jednego id w formularzu komend.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "300180a3-d5d8-4f3d-b95f-57e404d9e8e7",
+      "comment": "Poprawny format: formularz przetwarzany asynchronicznie.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b954f85f-d4c7-4d22-9ddd-c04ebf26ea0d",
+      "comment": "",
+      "command": "store",
+      "target": "nagios/cgi-bin/cmd.cgi?cmd_typ=2&com_id=",
+      "targets": [],
+      "value": "URL"
+    }, {
+      "id": "694795ad-a0f6-4756-8586-8f79062b72a4",
+      "comment": "",
+      "command": "open",
+      "target": "${URL}1,2",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "30e141fa-499c-4152-ae28-edb7a7cd87c0",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=input[name=\"com_id\"][value=\"1,2\"]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "c1deb4ee-ff89-475e-a965-580d7730c2a4",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "58bce7c1-3103-4a0b-8e02-1332029bf005",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class,  'infoMessage')]//*[contains(@class, 'com_id')][text()='1']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5663dcd1-068b-490a-8baf-ef33fd190596",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "xpath=//div[contains(@class,  'infoMessage')]//*[contains(@class, 'com_id')][text()='2']",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1c23651c-4d76-406b-92c3-368167522b96",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "xpath=//div[contains(@class,  'infoMessage')]//*[contains(@class, 'com_id')]",
+      "targets": [],
+      "value": "counter"
+    }, {
+      "id": "cde30aeb-54bc-4b99-b985-c40f81533c04",
+      "comment": "",
+      "command": "assert",
+      "target": "counter",
+      "targets": [],
+      "value": "2"
+    }, {
+      "id": "9b626ae1-498b-404c-a306-a4c977403478",
+      "comment": "Błąd formatu: formularz przetwarzany standardowo synchronicznie.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "72ae31c7-f863-494f-8dbc-44f829de4aec",
+      "comment": "",
+      "command": "storeJson",
+      "target": "[\"1a,2\", \"1, 2\", \"1 2\", \"1a,2\"]",
+      "targets": [],
+      "value": "fixtures"
+    }, {
+      "id": "f89713eb-8215-41c4-b8f8-e9ec528c7d3b",
+      "comment": "",
+      "command": "forEach",
+      "target": "fixtures",
+      "targets": [],
+      "value": "fixture"
+    }, {
+      "id": "fd3c9e10-51b3-45f8-8198-6aebbab022f7",
+      "comment": "",
+      "command": "open",
+      "target": "${URL}${fixture}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c05528f-90a0-404a-ac7e-fc4bd3786870",
+      "comment": "",
+      "command": "assertValue",
+      "target": "name=com_id",
+      "targets": [],
+      "value": "1"
+    }, {
+      "id": "4ed494f0-03a2-4722-8d04-2cb79a5a1874",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae57ceef-b7e7-4ff5-93d0-0a87f1fb6f76",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//div[contains(@class,  'infoMessage')]//*[contains(@class, 'com_id')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "412899c8-dc54-4894-9c37-7becc49af9d3",
+      "comment": "",
+      "command": "open",
+      "target": "${URL}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fecac922-4ff2-4b8e-a18c-97c05e7595d3",
+      "comment": "",
+      "command": "type",
+      "target": "name=com_id",
+      "targets": [],
+      "value": "${fixture}"
+    }, {
+      "id": "b058cabf-ac05-4a51-b4cf-da7fb61ddeeb",
+      "comment": "",
+      "command": "click",
+      "target": "name=btnSubmit",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "69c05356-b0d3-48db-b951-435d9e353e54",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "xpath=//div[contains(@class,  'infoMessage')]//*[contains(@class, 'com_id')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d31d7d48-3f33-4e7b-9e58-b6080e25ad75",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "3168016c-d69f-4010-a50f-85dc4c21811a",
+    "name": "statusCsvExport",
+    "commands": [{
+      "id": "a603f609-4dfa-49ff-9c40-f952543ed293",
+      "comment": "Export zaznaczonych wierszy do CSV.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2b8aba7f-7cc3-4757-a5a1-e8427a9bfc75",
+      "comment": "",
+      "command": "open",
+      "target": "/nagios/cgi-bin/status.cgi",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2cb7100-03e9-4e39-a2e0-59909b27c3a7",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "id=csvexport",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "adcbb24d-2bc6-41c1-83e8-4bdda1161688",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=a#csvexport[href]",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e92ac5f2-72f6-4ded-9f4f-7aa77a7c9531",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportSelectNotRootPartition",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0920e714-cf97-4753-ba60-886137491a75",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportSelectNotRootPartition",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1a81ef99-c52d-4db1-8c35-407b71dd13c9",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportClick",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2b403d6a-fd29-4ba3-b8f0-508328580cf9",
+      "comment": "",
+      "command": "assert",
+      "target": "rowsNb",
+      "targets": [],
+      "value": "3"
+    }, {
+      "id": "c74ec4ce-daee-40dd-982e-9931a0e53820",
+      "comment": "",
+      "command": "assert",
+      "target": "colsNb",
+      "targets": [],
+      "value": "9"
+    }, {
+      "id": "80013ace-0535-4bd5-bd42-e09501d20543",
+      "comment": "",
+      "command": "assert",
+      "target": "csvHeader",
+      "targets": [],
+      "value": "Host,Service,Status,Last Check,Duration,Attempt,Status Information,Contact Groups,Contacts"
+    }, {
+      "id": "82c47276-6c7e-407b-a7c5-887942039690",
+      "comment": "Zmiana zaznaczenia usuwa atrybut href wraz z dokumentem CSV.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cde5b8bf-e646-44b1-906f-2df27206c858",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportSelectNotRootPartition",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "154dde95-23ee-432f-8bc1-012beab12c6c",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportClick",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "78cd5b5c-68f3-4d0b-964c-20ce168b20ab",
+      "comment": "",
+      "command": "assert",
+      "target": "rowsNb",
+      "targets": [],
+      "value": "4"
+    }, {
+      "id": "1c90c4b6-0cbc-414c-a5fd-eb57360ba89b",
+      "comment": "",
+      "command": "assert",
+      "target": "colsNb",
+      "targets": [],
+      "value": "9"
+    }, {
+      "id": "fa040ffc-cf25-42da-9b5e-411f7418094d",
+      "comment": "",
+      "command": "assert",
+      "target": "csvHeader",
+      "targets": [],
+      "value": "Host,Service,Status,Last Check,Duration,Attempt,Status Information,Contact Groups,Contacts"
+    }, {
+      "id": "344d236b-03e5-43f0-a75c-6dc971ec5c11",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.evaluate('//tr[contains(@class, |detail|)][not(contains(@class, |selected|))][.//a[contains(@href, |host=localhost&service=Root+Partition|)]]'.replaceAll('|', String.fromCharCode(34)), document).iterateNext().click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1df50123-a8cd-4996-905f-9c13b632f16b",
+      "comment": "",
+      "command": "run",
+      "target": "_statusCsvExportClick",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "edbd4ea7-1db2-4cbd-a94e-6e47bdac3a8a",
+      "comment": "",
+      "command": "assert",
+      "target": "rowsNb",
+      "targets": [],
+      "value": "5"
+    }, {
+      "id": "9d616e02-d3f9-46c8-86d3-5b0404a5bd24",
+      "comment": "",
+      "command": "assert",
+      "target": "colsNb",
+      "targets": [],
+      "value": "11"
+    }, {
+      "id": "e61cce4f-cb8c-403a-9767-7ff21795e77c",
+      "comment": "",
+      "command": "assert",
+      "target": "csvHeader",
+      "targets": [],
+      "value": "Host,Service,Status,Last Check,Duration,Attempt,Status Information,Contact Groups,Contacts,Desc,Priority"
+    }, {
+      "id": "dc058141-9561-4d62-9b37-ce405f7a480f",
+      "comment": "Ostatnie dwie kolumny są wypełnione tylko dla serwisu Root Partition@localhost.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5f2fae71-99d3-41a0-bbf9-afc34088ead6",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${csv}.filter((r,idx) => idx && !r.match('localhost,Root Partition')).map(r => r.split(',').slice(-2).join('')).join('')",
+      "targets": [],
+      "value": "result"
+    }, {
+      "id": "b117a532-8f58-4083-ae2a-679c1f2c1a5e",
+      "comment": "",
+      "command": "assert",
+      "target": "result",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0e0dba34-c27a-4d19-b637-7b8a9a85198b",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${csv}.filter(r => r.match('localhost,Root Partition')).map(r => r.split(',').slice(-2).join(',')).join('')",
+      "targets": [],
+      "value": "result"
+    }, {
+      "id": "4b1d79f6-58a2-435d-be0b-9d2eb62933d2",
+      "comment": "",
+      "command": "assert",
+      "target": "result",
+      "targets": [],
+      "value": "Check Root Partition,Urgent"
+    }, {
+      "id": "5d86409f-2e80-4b7f-855d-cde192d13a92",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(1)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b96f796e-a7b2-4935-a00e-efd5d0a55372",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.querySelector('.detail:nth-child(1)').click()",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c180bd1d-8bdb-4e5e-8843-2f417fc1b65e",
+      "comment": "Odznaczenie poprzednio zaznaczonych wierszy.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3448ea1f-c831-4ac8-9017-b3c33571deaf",
+      "comment": "",
+      "command": "click",
+      "target": "id=csvexport",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ba852ac-b871-4c55-9b5e-7f0bc9aea775",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=a#csvexport[href]",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "effd3e6c-2962-4fe5-96ce-f7ed396f4c94",
+    "name": "_statusCsvExportClick",
+    "commands": [{
+      "id": "a24f1f52-b0bd-4610-8234-2328e94c17e0",
+      "comment": "Kliknięcie linku #csvexport.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "340fb8e0-523e-4079-8604-48794cd12736",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=a#csvexport[href]",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c846fc0e-323a-43e3-8d85-78bdd6a262b7",
+      "comment": "",
+      "command": "click",
+      "target": "id=csvexport",
+      "targets": [
+        ["id=csvexport", "id"],
+        ["linkText=Export Selected as CSV", "linkText"],
+        ["css=#csvexport", "css:finder"],
+        ["xpath=//a[contains(text(),'Export Selected as CSV')]", "xpath:link"],
+        ["xpath=//a[@id='csvexport']", "xpath:attributes"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'Export Selected as CSV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7a14b78-4479-45e3-8126-dbbc33b37282",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "css=a#csvexport[href]",
+      "targets": [],
+      "value": "30000"
+    }, {
+      "id": "bf8797fb-04bf-4288-9832-f1e3dc8ef477",
+      "comment": "",
+      "command": "executeAsyncScript",
+      "target": "return  fetch(document.getElementById(\"csvexport\").href).then(r => r.blob()).then(b => b.text()).then(t => t.replaceAll(String.fromCharCode(34), '').split(decodeURIComponent('%0A')))",
+      "targets": [],
+      "value": "csv"
+    }, {
+      "id": "8f3d5814-4f67-486e-ab2b-8693274e688a",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${csv}[0]",
+      "targets": [],
+      "value": "csvHeader"
+    }, {
+      "id": "6cd230ef-cbc8-48c1-96ac-fd3aec167dbc",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${csv}.length",
+      "targets": [],
+      "value": "rowsNb"
+    }, {
+      "id": "a4ed634e-32ef-4177-a05c-82b0ec928d27",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return ${csvHeader}.split(',').length",
+      "targets": [],
+      "value": "colsNb"
+    }]
+  }, {
+    "id": "98a20f6f-449a-4dc6-b230-f600eacf24ac",
+    "name": "_statusCsvExportSelectNotRootPartition",
+    "commands": [{
+      "id": "5fb7e821-db68-4a68-8c38-cea5729fac97",
+      "comment": "Zaznacza jeden element nie będący usługą Root Partition@localhost.",
+      "command": "//doc",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1a3937d0-6579-4ea2-81e1-0c5ef54d6b0a",
+      "comment": "",
+      "command": "executeScript",
+      "target": "document.evaluate('//tr[contains(@class, |detail|)][not(contains(@class, |selected|))][last()][.//a[not(contains(@href, |host=localhost&service=Root+Partition|))]]'.replaceAll('|', String.fromCharCode(34)), document).iterateNext().click();",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0b80d1ac-9808-44fc-8e96-8eb94ccce206",
+    "name": "customVars",
+    "persistSession": false,
+    "parallel": true,
+    "timeout": 300,
+    "tests": ["3fed4389-a563-450e-afbf-91a15441c3a7", "9b3be036-d2fc-4fdc-bcb6-9e3d91bae5f9", "5b45034e-9cc7-471d-a412-88f8168b0c0b"]
+  }, {
+    "id": "0e777f5b-9d0d-4ffb-b152-42c2c0468c03",
+    "name": "commandPanel",
+    "persistSession": false,
+    "parallel": true,
+    "timeout": 300,
+    "tests": ["d532d22e-c8bd-4399-987f-849ca20173a2", "898ba58f-7342-4aee-9e11-7d581dff622f", "d27059f4-c9e1-4cad-8a5b-3205dd7d15f5", "de10f138-1245-4a63-aa49-618a2ab61d3d", "2c74d2ea-1134-4012-8772-b5089adce9b4"]
+  }, {
+    "id": "f38f513e-cd5c-4c68-8089-e8e1303ae947",
+    "name": "bulkRemove",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c81480d8-5320-4a6d-8552-916de5e89c1f", "f69cb273-c7eb-426d-9ff7-5e41db0c02a4"]
+  }, {
+    "id": "295050a2-927a-48f2-9eb5-dea44be89af4",
+    "name": "csvExport",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["3168016c-d69f-4010-a50f-85dc4c21811a"]
+  }],
+  "urls": ["http://nagiosadmin:adminpass@127.0.0.1/"],
+  "plugins": []
+}

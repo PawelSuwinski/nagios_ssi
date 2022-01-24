@@ -1,0 +1,30 @@
+<style type="text/css">
+.results .cmdType { padding-bottom: 20px; }
+.results .cmdType ~ div:not(.infoMessage) { display: none; }
+.results .infoMessage { margin-top: 0px; }
+.results  .infoMessage ul { list-style: none; }
+.results .infoMessage li a  {
+  text-decoration: none;
+  color: black;
+  padding-left: 5px;
+}
+.results .error, .results .error li a { color: red; }
+.results .error li::before   { content: '[ ! ]'; }
+.results .success li::before { content: '[OK] '; }
+.results span.service::after { content: ' @ ';   }
+@keyframes pending {
+  50%  { content: '. . '; }
+  100% { content: '. ';   }
+}
+.spinner::after {
+  content: '. . .';
+  animation: pending 1s infinite linear alternate;
+}
+.spinner:empty {
+  width: 30px;
+  display: inline-block;
+}
+</style>
+<script src="/nagios/ssi/js/mithril.min.js"></script>
+<script src="/nagios/ssi/js/stream.js"></script>
+<script src="/nagios/ssi/js/cmd-footer.js"></script>

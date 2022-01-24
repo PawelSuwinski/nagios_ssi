@@ -1,0 +1,50 @@
+<style type="text/css">
+table.status > tbody > tr.detail::after {
+  margin-right: 20px;
+  padding-left: 10px;
+}
+table.status > tbody > tr.detail::after {
+  content: '[_]';
+}
+table.status > tbody > tr.detail.selected::after {
+  content: '[x]';
+}
+#pagelimit { 
+  float: left;
+}
+.commandPanel {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.commandPanel table.command { 
+  display: none;
+}
+.commandPanel.show table.command { 
+  display: block;
+}
+.commandPanel div[class$="Title"] { 
+  font-weight: normal;
+}
+.commandPanel div[class$="Title"]::after { 
+  content: ' +';
+}
+.commandPanel.show div[class$="Title"]::after { 
+  content: '';
+}
+@keyframes pending {
+  50%  { content: '. . '; }
+  100% { content: '. ';   }
+}
+.processing::after {
+  content: '. . .';
+  animation: pending 0.5s infinite linear alternate;
+}
+.processing:empty {
+  width: 30px;
+  display: inline-block;
+}
+</style>
+<script src="/nagios/ssi/js/mithril.min.js"></script>
+<script src="/nagios/ssi/js/stream.js"></script>
+<script src="/nagios/ssi/js/status-footer.js"></script>
